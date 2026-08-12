@@ -1,0 +1,33 @@
+{
+  "name": "FFR Field Force",
+  "short_name": "FFR",
+  "description": "Field Force Reporting App for Sales Team",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1565C0",
+  "theme_color": "#1565C0",
+  "scope": "./",
+  "id": "com.ffr.fieldforce",
+  "categories": ["business", "productivity"],
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2331/2331966.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2331/2331966.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2331/2331966.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
