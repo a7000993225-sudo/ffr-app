@@ -22,8 +22,42 @@
       width: 100%; 
       height: 100vh; 
       overflow: hidden; 
-      background: #1565C0; 
+      background: #1565C0;
     }
+    
+    /* Blue label to cover Google banner + block clicks */
+    .banner-cover {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 44px;
+      background: linear-gradient(135deg, #1565C0, #0D47A1);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      user-select: none;
+      -webkit-user-select: none;
+      pointer-events: auto;
+      cursor: default;
+    }
+    
+    .banner-cover .logo-mini {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: white;
+      padding: 2px;
+    }
+    
     .loader { 
       position: fixed; 
       inset: 0; 
@@ -31,9 +65,14 @@
       display: flex; 
       align-items: center; 
       justify-content: center; 
-      z-index: 9999; 
+      z-index: 999999; 
       color: white; 
-      font-family: 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Segoe UI', Roboto, sans-serif; 
+      transition: opacity 0.5s;
+    }
+    .loader.hide { 
+      opacity: 0;
+      pointer-events: none;
     }
     .spin { 
       width: 60px; 
@@ -48,6 +87,7 @@
   </style>
 </head>
 <body>
+  <!-- Full page loader (shown briefly before redirect) -->
   <div id="loader" class="loader">
     <div style="text-align:center;">
       <div class="spin"></div>
@@ -56,9 +96,35 @@
     </div>
   </div>
   
+  <!-- Blue label covering Google banner (click blocked) -->
+  <div class="banner-cover" 
+       onclick="event.preventDefault(); event.stopPropagation(); return false;"
+       ontouchstart="event.preventDefault(); event.stopPropagation(); return false;"
+       ontouchend="event.preventDefault(); event.stopPropagation(); return false;">
+    <img src="https://i.ibb.co/RGHyCZvv/logo.png" class="logo-mini" alt="FFR" />
+    FFR Field Force
+  </div>
+  
   <script>
-    // Direct redirect to Apps Script — no iframe
-    window.location.replace("https://script.google.com/macros/s/AKfycbyDwctOybdCMPoYCpSzt7aR5kt1ibdi2bglV6z1ublOsz41t_8Qd0V5Rccdp7_mC_rf5Q/exec");
+    // Redirect to Apps Script directly (NO iframe = camera + PDF works)
+    setTimeout(function() {
+      window.location.replace("https://script.google.com/macros/s/AKfycbyDwctOybdCMPoYCpSzt7aR5kt1ibdi2bglV6z1ublOsz41t_8Qd0V5Rccdp7_mC_rf5Q/exec");
+    }, 800);
+    
+    // Block all interactions on banner cover
+    setTimeout(function() {
+      var cover = document.querySelector('.banner-cover');
+      if (cover) {
+        ['click', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'touchmove', 'pointerdown', 'pointerup', 'contextmenu'].forEach(function(evt) {
+          cover.addEventListener(evt, function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+          }, true);
+        });
+      }
+    }, 100);
   </script>
 </body>
 </html>
